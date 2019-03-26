@@ -47,7 +47,7 @@ podTemplate(
       }
 
       // The next two stages should run in parallel
-      stage('Run Test in Parallel')
+      stage('Run Test in Parallel') {
         parallel {
           // Using Maven run the unit tests
           stage('Unit Tests') {

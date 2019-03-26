@@ -6,14 +6,14 @@ if [ "$#" -ne 3 ]; then
     echo "  Example: $0 wkha https://github.com/redhat-gpte-devopsautomation/advdev_homework_template.git na311.openshift.opentlc.com"
     exit 1
 fi
-
+set -x
 GUID=$1
 REPO=$2
 CLUSTER=$3
 echo "Setting up Jenkins in project ${GUID}-jenkins from Git Repo ${REPO} for Cluster ${CLUSTER}"
 
 # Set up Jenkins with sufficient resources
-oc new-project ${GUID}-jenkins --"Persistent Jenkins"
+oc new-project ${GUID}-jenkins --display-name "Persistent Jenkins"
 
 oc new-app jenkins-persistent \
     --param ENABLE_OAUTH=true \
