@@ -49,9 +49,9 @@ podTemplate(
       }
 
       // The next two stages should run in parallel
-      stage('Code Checks') {
-        echo "Parallel.."
-        parallel { 
+      //-stage('Code Checks') {
+      //-  echo "Parallel.."
+      //-  parallel { 
           // Using Maven run the unit tests
           stage('Unit Tests') {
             echo "Running Unit Tests"
@@ -74,8 +74,8 @@ podTemplate(
               }
             }
           }
-        } // end parallel
-      } // end Code Checks
+      //-  } // end parallel
+      //-} // end Code Checks
 
       // Publish the built war file to Nexus
       stage('Publish to Nexus') {
