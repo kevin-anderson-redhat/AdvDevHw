@@ -60,18 +60,16 @@ podTemplate(
 
           // Using Maven to call SonarQube for Code Analysis
           stage('Code Analysis') {
-            steps {
-              script {
-                echo "Running Code Analysis"
-                echo "${mvnCmd} sonar:sonar "+
-                     "-Dsonar.host.url=http://sonarqube.gpte-hw-cicd.svc.cluster.local:9000/ "+
-                     "-Dsonar.projectName=${JOB_BASE_NAME} "+
-                     "-Dsonar.projectVersion=${devTag}"
-                sh   "${mvnCmd} sonar:sonar "+
-                     "-Dsonar.host.url=http://sonarqube.gpte-hw-cicd.svc.cluster.local:9000/ "+
-                     "-Dsonar.projectName=${JOB_BASE_NAME} "+
-                     "-Dsonar.projectVersion=${devTag}"
-              }
+            script {
+              echo "Running Code Analysis"
+              echo "${mvnCmd} sonar:sonar "+
+                   "-Dsonar.host.url=http://sonarqube.gpte-hw-cicd.svc.cluster.local:9000/ "+
+                   "-Dsonar.projectName=${JOB_BASE_NAME} "+
+                   "-Dsonar.projectVersion=${devTag}"
+              sh   "${mvnCmd} sonar:sonar "+
+                   "-Dsonar.host.url=http://sonarqube.gpte-hw-cicd.svc.cluster.local:9000/ "+
+                   "-Dsonar.projectName=${JOB_BASE_NAME} "+
+                   "-Dsonar.projectVersion=${devTag}"
             }
           }
       //-  } // end parallel
