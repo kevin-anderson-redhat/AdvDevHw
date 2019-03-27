@@ -47,14 +47,15 @@ podTemplate(
       }
 
       // The next two stages should run in parallel
-      stages { stage('Run Test in Parallel') {
-        parallel {
+      parallel { 
+        'UnitTests': {
           // Using Maven run the unit tests
           stage('Unit Tests') {
             echo "Running Unit Tests"
             sh "${mvnCmd} test"
           }
-    
+        }, 
+        'CodeAnalysis': {
           // Using Maven to call SonarQube for Code Analysis
           stage('Code Analysis') {
             echo "Running Code Analysis"
@@ -67,7 +68,7 @@ podTemplate(
             }
           }
         }
-      } }
+      } 
 
       // Publish the built war file to Nexus
       stage('Publish to Nexus') {
