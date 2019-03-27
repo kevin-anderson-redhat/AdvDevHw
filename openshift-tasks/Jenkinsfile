@@ -42,10 +42,7 @@ podTemplate(
       // Do not run tests in this step
       stage('Build war') {
         echo "Building version ${devTag} "
-        
         sh "${mvnCmd} clean package -DskipTests=true"
-        echo "Builtg version ${devTag} "+
-             " extra comment here"
       }
 
       // The next two stages should run in parallel
@@ -81,6 +78,7 @@ podTemplate(
         sh "${mvnCmd} deploy "+
            "-DskipTests=true "+
            "-DaltDeploymentRepository=nexus::default::http://nexus3.gpte-hw-cicd.svc.cluster.local:8081/repository/all-maven-public"
+        echo "Published to Nexus"
       }
 
       // Build the OpenShift Image in OpenShift and tag it.
