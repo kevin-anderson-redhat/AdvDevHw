@@ -77,9 +77,8 @@ podTemplate(
         // http://nexus3.gpte-hw-cicd.svc.cluster.local:8081/repository/all-maven-public/org/jboss/quickstarts/eap/tasks/1.0/tasks-1.0.war
         echo "Publish to Nexus"
         sh "${mvnCmd} deploy -e "+
-           "-DskipTests=true"
-           //"-DskipTests=true "+
-           //"-DaltDeploymentRepository=nexus::default::http://nexus3.gpte-hw-cicd.svc.cluster.local:8081/repository/all-maven-public"
+           "-Dmaven.test.skip=true"
+            "-DaltDeploymentRepository=nexus::default::http://nexus3.gpte-hw-cicd.svc.cluster.local:8081/repository/all-maven-public"
         echo "Published to Nexus"
       }
 
