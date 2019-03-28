@@ -79,7 +79,7 @@ podTemplate(
         sh "${mvnCmd} deploy-file  -e "+
            "-DrepositoryId=nexus "+
            "-Dfile=tasks-${version}.war "+
-           "-Durl=http://nexus3.gpte-hw-cicd.svc.cluster.local:8081/repository/all-maven-public/org/jboss/quickstarts/eap/tasks/${version}/tasks-${version}.war"+
+           "-Durl=http://nexus3.gpte-hw-cicd.svc.cluster.local:8081/repository/all-maven-public/org/jboss/quickstarts/eap/tasks/${version}/tasks-${version}.war"
         // sh "${mvnCmd} deploy  -e "+
         //   "-DskipTests=true "+
         //   "-DaltDeploymentRepository=nexus::default::http://nexus3.gpte-hw-cicd.svc.cluster.local:8081/repository/all-maven-public/"
