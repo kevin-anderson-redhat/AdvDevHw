@@ -46,31 +46,33 @@ podTemplate(
       }
 
       // The next two stages should run in parallel
-      //-stage('Code Checks') {
-      //-  echo "Parallel.."
-      //-  parallel { 
-          // Using Maven run the unit tests
-          stage('Unit Tests') {
-            echo "Running Unit Tests"
-            sh "${mvnCmd} test"
-          }
-
-          // Using Maven to call SonarQube for Code Analysis
-          stage('Code Analysis') {
-            script {
-              echo "Running Code Analysis - ${JOB_BASE_NAME}"
-              echo "${mvnCmd} sonar:sonar "+
-                   "-Dsonar.host.url=http://sonarqube.gpte-hw-cicd.svc.cluster.local:9000/ "+
-                   "-Dsonar.projectName=${JOB_BASE_NAME} "+
-                   "-Dsonar.projectVersion=${devTag}"
-              sh   "${mvnCmd} sonar:sonar "+
-                   "-Dsonar.host.url=http://sonarqube.gpte-hw-cicd.svc.cluster.local:9000/ "+
-                   "-Dsonar.projectName=${JOB_BASE_NAME} "+
-                   "-Dsonar.projectVersion=${devTag}"
+      stage('Code Checks') {
+        parallel { 
+          "UnitTest": {
+            // Using Maven run the unit tests
+            stage('Unit Tests') {
+              echo "Running Unit Tests"
+              sh "${mvnCmd} test"
+            }
+          },
+          "CodeAnalysis": {
+            // Using Maven to call SonarQube for Code Analysis
+            stage('Code Analysis') {
+              script {
+                echo "Running Code Analysis - ${JOB_BASE_NAME}"
+                echo "${mvnCmd} sonar:sonar "+
+                     "-Dsonar.host.url=http://sonarqube.gpte-hw-cicd.svc.cluster.local:9000/ "+
+                     "-Dsonar.projectName=${JOB_BASE_NAME} "+
+                     "-Dsonar.projectVersion=${devTag}"
+                sh   "${mvnCmd} sonar:sonar "+
+                     "-Dsonar.host.url=http://sonarqube.gpte-hw-cicd.svc.cluster.local:9000/ "+
+                     "-Dsonar.projectName=${JOB_BASE_NAME} "+
+                     "-Dsonar.projectVersion=${devTag}"
+              }
             }
           }
-      //-  } // end parallel
-      //-} // end Code Checks
+        } // end parallel
+      } // end Code Checks
 
       // Publish the built war file to Nexus
       stage('Publish to Nexus') {
