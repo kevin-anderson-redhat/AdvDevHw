@@ -91,7 +91,7 @@ podTemplate(
         // TBD: Build Image, tag Image
         script {
           openshift.withCluster() {
-            openshift.withProject("${devProject}") {
+            openshift.withProject("${JOB_BASE_NAME}") {
               openshift.selector("bc", "tasks").startBuild("--from-file=http://nexus3.gpte-hw-cicd.svc.cluster.local:8081/repository/releases/org/jboss/quickstarts/eap/tasks/${version}/tasks-${version}.war", "--wait=true")
               openshift.tag("tasks:latest", "tasks:${devTag}")
             }
@@ -108,7 +108,7 @@ podTemplate(
           echo "Deploying container image to Development Project"
           // Update the Image on the Development Deployment Config
           openshift.withCluster() {
-            openshift.withProject("${devProject}") {
+            openshift.withProject("${JOB_BASE_NAME}") {
               openshift.set("image", "dc/tasks", "tasks=docker-registry.default.svc:5000/${devProject}/tasks:${devTag}")
     
               // Update the Config Map which contains the users for the Tasks application
