@@ -76,13 +76,9 @@ podTemplate(
       stage('Publish to Nexus') {
         // http://nexus3.gpte-hw-cicd.svc.cluster.local:8081/repository/all-maven-public/org/jboss/quickstarts/eap/tasks/1.0/tasks-1.0.war
         echo "Publish to Nexus"
-        sh "${mvnCmd} deploy-file  -e "+
-           "-DrepositoryId=nexus "+
-           "-Dfile=tasks-${version}.war "+
-           "-Durl=http://nexus3.gpte-hw-cicd.svc.cluster.local:8081/repository/all-maven-public/org/jboss/quickstarts/eap/tasks/${version}/tasks-${version}.war"
-        // sh "${mvnCmd} deploy  -e "+
-        //   "-DskipTests=true "+
-        //   "-DaltDeploymentRepository=nexus::default::http://nexus3.gpte-hw-cicd.svc.cluster.local:8081/repository/all-maven-public/"
+         sh "${mvnCmd} deploy  -e "+
+           "-DaltDeploymentRepository=nexus::default::http://nexus3.gpte-hw-cicd.svc.cluster.local:8081/repository/releases"
+           //"-DskipTests=true "+
         echo "Published to Nexus"
       }
 
